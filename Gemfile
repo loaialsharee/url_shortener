@@ -49,4 +49,8 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
 end
 
-gem "faraday", "~> 2.14"
+gem "faraday", ">= 0"
+
+gem "nokogiri", "~> 1.19"
+
+gem "faraday-follow_redirects", "~> 0.5.0"

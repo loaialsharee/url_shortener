@@ -11,7 +11,7 @@ class ShortUrlsController < ApplicationController
         short_url = ShortUrl.create!(
             target_url: url,
             code: code,
-            title: fetch_title(url)
+            title: TitleFetcher.fetch(url)
         )
 
         render json: {
