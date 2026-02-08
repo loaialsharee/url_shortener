@@ -1,6 +1,6 @@
 class ShortUrlsController < ApplicationController
     def create
-        url = params[:target_url]
+        url = normalize_url(params[:target_url])
 
         unless valid_url?(url)
             return render json: { error: 'Invalid URL' }, status: :unprocessable_entity
@@ -18,10 +18,10 @@ class ShortUrlsController < ApplicationController
             short_url: "#{request.base_url}/#{short_url.code}",
             target_url: short_url.target_url,
             title: short_url.title
-        }   , status: :ok
-end
+        }, status: :ok
+    end
 
-private
+    private
 
     def generate_unique_code
         loop do
@@ -30,8 +30,25 @@ private
         end
     end
 
+    def normalize_url(url)
+        return nil if url.blank?
+        
+        url = url.strip
+        url.match?(/\A https?:\/\//ix) ? url : "https://#{url}"
+    end
+
     def valid_url?(url)
-        url =~ URI::DEFAULT_PARSER.make_regexp(%w[http https])
+        return false if url.blank?
+        
+        begin
+            uri = URI.parse(url)
+            
+            (uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)) && 
+            !uri.host.nil? && 
+            uri.host.include?('.')
+        rescue URI::InvalidURIError
+            false
+        end
     end
 
     def fetch_title(url)
