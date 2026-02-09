@@ -54,3 +54,9 @@ gem "faraday", ">= 0"
 gem "nokogiri", "~> 1.19"
 
 gem "faraday-follow_redirects", "~> 0.5.0"
+
+gem "rspec-rails", "~> 8.0"
+
+gem "factory_bot_rails", "~> 6.5"
+
+gem "webmock", "~> 3.26"
