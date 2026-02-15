@@ -15,6 +15,7 @@ class ShortUrlsController < ApplicationController
         )
 
         render json: {
+            code: short_url.code,
             short_url: "#{request.base_url}/#{short_url.code}",
             target_url: short_url.target_url,
             title: short_url.title
