@@ -6,7 +6,7 @@ class AnalyticsController < ApplicationController
     visits = short_url.visits.order(visited_at: :desc)
 
     render json: {
-      code: short_url.code,
+      short_url: "#{request.base_url}/#{short_url.code}",
       target_url: short_url.target_url,
       total_clicks: visits.count,
       visits: visits.map do |v|
