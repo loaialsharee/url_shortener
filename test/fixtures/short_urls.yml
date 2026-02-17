@@ -1,11 +1,20 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  target_url: MyString
-  code: MyString
-  title: MyString
+  target_url: "https://example.com"
+  code: "test001"
+  title: "Example Site"
+  created_at: <%= 1.day.ago %>
+  updated_at: <%= 1.day.ago %>
 
 two:
-  target_url: MyString
-  code: MyString
-  title: MyString
+  target_url: "https://github.com"
+  code: "test002"
+  title: "GitHub"
+  created_at: <%= 2.days.ago %>
+  updated_at: <%= 2.days.ago %>
+
+with_visits:
+  target_url: "https://linkedin.com"
+  code: "linkedin"
+  title: "Linkedin Site"
+  created_at: <%= 3.days.ago %>
+  updated_at: <%= 3.days.ago %>
