@@ -1,58 +1,22 @@
 class ShortUrlsController < ApplicationController
-    def create
-        url = normalize_url(params[:target_url])
+  def create
+    result = ShortUrlCreator.call(params[:target_url])
 
-        unless valid_url?(url)
-            return render json: { error: 'Invalid URL' }, status: :unprocessable_entity
-        end
-
-        code = generate_unique_code
-
-        short_url = ShortUrl.create!(
-            target_url: url,
-            code: code,
-            title: TitleFetcher.fetch(url)
-        )
-
-        render json: {
-            code: short_url.code,
-            short_url: "#{request.base_url}/#{short_url.code}",
-            target_url: short_url.target_url,
-            title: short_url.title
-        }, status: :ok
+    if result.success?
+      render json: serialize(result.short_url), status: :ok
+    else
+      render json: { error: result.error }, status: :unprocessable_entity
     end
+  end
 
-    private
+  private
 
-    def generate_unique_code
-        loop do
-            code = ShortUrlGenerator.generate
-            break code unless ShortUrl.exists?(code: code)
-        end
-    end
-
-    def normalize_url(url)
-        return nil if url.blank?
-        
-        url = url.strip
-        url.match?(/\A https?:\/\//ix) ? url : "https://#{url}"
-    end
-
-    def valid_url?(url)
-        return false if url.blank?
-        
-        begin
-            uri = URI.parse(url)
-            
-            (uri.is_a?(URI::HTTP) || uri.is_a?(URI::HTTPS)) && 
-            !uri.host.nil? && 
-            uri.host.include?('.')
-        rescue URI::InvalidURIError
-            false
-        end
-    end
-
-    def fetch_title(url)
-        "Unknown Title" 
-    end
+  def serialize(short_url)
+    {
+      code: short_url.code,
+      short_url: "#{request.base_url}/#{short_url.code}",
+      target_url: short_url.target_url,
+      title: short_url.title
+    }
+  end
 end
