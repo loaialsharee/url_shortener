@@ -64,3 +64,7 @@ gem "webmock", "~> 3.26"
 gem "rack-cors"
 
 gem "mocha", group: :test
+
+gem "rack-attack"
+
+gem "redis"
