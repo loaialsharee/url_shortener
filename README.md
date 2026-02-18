@@ -1,24 +1,54 @@
-# README
+# Pocket URL Tracker - Backend Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Backend application built with Ruby on Rails.
 
-Things you may want to cover:
+🌐 Live: https://pocket-url-tracker.vercel.app/ <br>
+📜 Docs: https://github.com/loaialsharee/url_shortener/wiki/Pocket-%E2%80%90-A-URL-Shortener-Solution
 
-* Ruby version
+# Local Development Setup
+* Ruby 3.3.5
+* Rails 8.1.2
+* PostgreSQL
+* Redis
 
-* System dependencies
+# Quick Start
+1️⃣ Install dependencies:
+```
+bundle install
+```
 
-* Configuration
+2️⃣ Setup the database
 
-* Database creation
+```
+rails db:create
+rails db:migrate
+```
 
-* Database initialization
 
-* How to run the test suite
+3️⃣ Start Redis server
 
-* Services (job queues, cache servers, search engines, etc.)
+```
+redis-server
+```
 
-* Deployment instructions
+4️⃣ Start the Rails server
+```
+rails s
+```
 
-* ...
+* Make sure the backend server is running on a different port if you're integrating with the frontend app.
+
+5️⃣ Run the tests
+```
+rails test
+```
+
+
+# Production Deployment
+
+The deployed service runs using:
+
+```
+bundle exec rails db:migrate && bundle exec puma -p $PORT -e production
+```
+
