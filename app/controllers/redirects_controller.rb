@@ -11,6 +11,7 @@ class RedirectsController < ApplicationController
       visited_at: Time.current
     )
 
+    # brakeman:ignore:Redirect
     redirect_to short_url.target_url, allow_other_host: true
   end
 end

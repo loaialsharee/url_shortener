@@ -1,7 +1,6 @@
 require "test_helper"
 
 class ShortUrlCreatorTest < ActiveSupport::TestCase
-
   test "returns success result for valid URL" do
     TitleFetcher.stubs(:fetch).returns("Example")
 

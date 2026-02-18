@@ -12,13 +12,12 @@ module ActiveSupport
     def json_response
       ::JSON.parse(response.body)
     end
-    
-    def create_short_url(attributes = {})
 
-      pid = Process.pid.to_s[-4..]  
-      random = SecureRandom.hex(3)   
-      default_code = "t#{pid}_#{random}"  
-      
+    def create_short_url(attributes = {})
+      pid = Process.pid.to_s[-4..]
+      random = SecureRandom.hex(3)
+      default_code = "t#{pid}_#{random}"
+
       ShortUrl.create!({
         target_url: "https://example.com",
         code: default_code,

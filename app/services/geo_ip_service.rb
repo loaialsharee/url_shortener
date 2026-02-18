@@ -17,12 +17,12 @@ class GeoIpService
       return "Unknown" if country.blank?
 
       country
-    
+
     when 429
       Rails.logger.warn("GeoIpService rate limited (429)")
       "Unknown"
 
-    else 
+    else
       Rails.logger.warn("GeoIpService failed with status #{response.status}")
       "Unknown"
     end

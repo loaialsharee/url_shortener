@@ -14,7 +14,7 @@ class RackAttackTest < ActionDispatch::IntegrationTest
   def make_request(ip: "1.2.3.4", url: "https://example.com")
     post "/shorten",
       params: { target_url: url },
-      headers: { 
+      headers: {
         "HTTP_X_FORWARDED_FOR" => ip,
         "REMOTE_ADDR" => ip
       }
@@ -34,7 +34,7 @@ class RackAttackTest < ActionDispatch::IntegrationTest
       assert_response :ok, "Request #{i+1} should succeed"
     end
 
-    make_request    
+    make_request
     assert_response 429, "Request 8 should be throttled"
     assert_not_nil response.headers["Retry-After"], "Retry-After header missing"
     assert_includes json_response["error"], "Too many requests"
@@ -80,7 +80,7 @@ class RackAttackTest < ActionDispatch::IntegrationTest
 
     30.times do
       get "/analytics/#{short_url.code}",
-        headers: { 
+        headers: {
           "HTTP_X_FORWARDED_FOR" => "1.2.3.4",
           "REMOTE_ADDR" => "1.2.3.4"
         }
@@ -88,7 +88,7 @@ class RackAttackTest < ActionDispatch::IntegrationTest
     end
 
     get "/analytics/#{short_url.code}",
-      headers: { 
+      headers: {
         "HTTP_X_FORWARDED_FOR" => "1.2.3.4",
         "REMOTE_ADDR" => "1.2.3.4"
       }
